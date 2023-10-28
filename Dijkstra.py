@@ -1,30 +1,33 @@
 from Node import Node
 from Node import Path
+import Interface
 
 import sys
 
-path = []
+window = Interface()
 
-nodes = []
+path = window.path
+
+nodes = window.nodes
 visited = []
 
-nodes.append(Node("A", 0))
-nodes.append(Node("B"))
-nodes.append(Node("C"))
-nodes.append(Node("D"))
-nodes.append(Node("E"))
-nodes.append(Node("F"))
-nodes.append(Node("G"))
-nodes.append(Node("H"))
+# nodes.append(Node("A", 0))
+# nodes.append(Node("B"))
+# nodes.append(Node("C"))
+# nodes.append(Node("D"))
+# nodes.append(Node("E"))
+# nodes.append(Node("F"))
+# nodes.append(Node("G"))
+# nodes.append(Node("H"))
 
-Path(10, nodes[0], nodes[1])
-Path(2, nodes[0], nodes[2])
-Path(1, nodes[1], nodes[7])
-Path(5, nodes[2], nodes[3])
-Path(3, nodes[3], nodes[4])
-Path(4, nodes[4], nodes[5])
-Path(1, nodes[5], nodes[6])
-Path(2, nodes[6], nodes[7])
+# Path(10, nodes[0], nodes[1])
+# Path(2, nodes[0], nodes[2])
+# Path(1, nodes[1], nodes[7])
+# Path(5, nodes[2], nodes[3])
+# Path(3, nodes[3], nodes[4])
+# Path(4, nodes[4], nodes[5])
+# Path(1, nodes[5], nodes[6])
+# Path(2, nodes[6], nodes[7])
 
 for node in nodes:
     if node.distance == 0:
