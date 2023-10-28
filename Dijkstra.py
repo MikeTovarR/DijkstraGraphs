@@ -1,72 +1,100 @@
 from Node import Node
 from Node import Path
-import Interface
 
 import sys
 
-window = Interface()
 
-path = window.path
+class Graph:
+    def __init__(self) -> None:
+        self.nodes = []
+        self.visited = []
 
-nodes = window.nodes
-visited = []
+    def pass_nodes(self, nodes: list) -> None:
+        self.nodes = nodes
 
-# nodes.append(Node("A", 0))
-# nodes.append(Node("B"))
-# nodes.append(Node("C"))
-# nodes.append(Node("D"))
-# nodes.append(Node("E"))
-# nodes.append(Node("F"))
-# nodes.append(Node("G"))
-# nodes.append(Node("H"))
+    # Search a path until a node with no outgoing paths and return the shortest path
+    def search_path(self) -> list:
+        path = []
+        for node in self.nodes:
+            if node.distance == 0:
+                self.visited.append(node)
+                node.visited = True
+        while True:
+            for node in self.visited:
+                for p in node.paths:
+                    p.check_distance()
+            val = sys.maxsize
+            flag_node = None
+            flag_parent = None
 
-# Path(10, nodes[0], nodes[1])
-# Path(2, nodes[0], nodes[2])
-# Path(1, nodes[1], nodes[7])
-# Path(5, nodes[2], nodes[3])
-# Path(3, nodes[3], nodes[4])
-# Path(4, nodes[4], nodes[5])
-# Path(1, nodes[5], nodes[6])
-# Path(2, nodes[6], nodes[7])
+            for node in self.visited:
+                for n in node.neighbors:
+                    if n.distance < val and not n.visited:
+                        val = n.distance
+                        flag_node = n
+                        flag_parent = node
 
-for node in nodes:
-    if node.distance == 0:
-        visited.append(node)
-        node.visited = True
+            self.visited.append(flag_node)
+            flag_node.visited = True
+            flag_node.add_parent(flag_parent)
 
-while True:
-    for node in visited:
-        for p in node.paths:
-            p.check_distance()
+            if not flag_node.neighbors:
+                break
 
-    val = sys.maxsize
-    flag_node = None
-    flag_parent = None
+        node = self.visited[-1]
+        path.append(node)
+        while node.parent:
+            node = node.parent
+            path.append(node)
 
-    for node in visited:
-        for n in node.neighbors:
-            if n.distance < val and not n.visited:
-                val = n.distance
-                flag_node = n
-                flag_parent = node
+        return path
 
-    visited.append(flag_node)
-    flag_node.visited = True
-    flag_node.add_parent(flag_parent)
 
-    if not flag_node.neighbors:
-        break
+# window = Interface()
 
-n = visited[-1]
-path.append(n)
-while n.parent:
-    path.append(n.parent)
-    n = n.parent
+# path = window.path
 
-for node in path:
-    print(node)
+# nodes = window.nodes
+# visited = []
 
-print("--------")
+# for node in nodes:
+#     if node.distance == 0:
+#         visited.append(node)
+#         node.visited = True
 
-for node in visited:
-    print(node)
+# while True:
+#     for node in visited:
+#         for p in node.paths:
+#             p.check_distance()
+
+#     val = sys.maxsize
+#     flag_node = None
+#     flag_parent = None
+
+#     for node in visited:
+#         for n in node.neighbors:
+#             if n.distance < val and not n.visited:
+#                 val = n.distance
+#                 flag_node = n
+#                 flag_parent = node
+
+#     visited.append(flag_node)
+#     flag_node.visited = True
+#     flag_node.add_parent(flag_parent)
+
+#     if not flag_node.neighbors:
+#         break
+
+# n = visited[-1]
+# path.append(n)
+# while n.parent:
+#     path.append(n.parent)
+#     n = n.parent
+
+# for node in path:
+#     print(node)
+
+# print("--------")
+
+# for node in visited:
+#     print(node)

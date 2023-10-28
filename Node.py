@@ -1,6 +1,7 @@
 import sys
 import pygame
 
+
 class Node:
     pass
 
@@ -37,9 +38,15 @@ class Node:
 
     def draw(self, screen):
         pygame.draw.circle(screen, (255, 0, 0), (self.x, self.y), 20)
-        font = pygame.font.Font(None, 36)
+        font = pygame.font.Font("Arial.ttf", 36)
         text = font.render(self.tag, True, (0, 0, 0))
         screen.blit(text, (self.x - 10, self.y - 20))
+        weight = None
+        if self.distance != sys.maxsize:
+            weight = font.render(str(self.distance), True, (0, 0, 0))
+        else:
+            weight = font.render("∞", True, (0, 0, 0))
+        screen.blit(weight, (self.x, self.y - 50))
 
 
 class Path:
@@ -53,11 +60,28 @@ class Path:
     def check_distance(self) -> None:
         if self.weigth + self.start_node.distance < self.end_node.distance:
             self.end_node.distance = self.weigth + self.start_node.distance
-    
+
     def draw(self, screen):
-        pygame.draw.line(screen, (0, 0, 255), (self.start_node.x, self.start_node.y), (self.end_node.x, self.end_node.y), 5)
+        pygame.draw.line(
+            screen,
+            (0, 0, 255),
+            (self.start_node.x, self.start_node.y),
+            (self.end_node.x, self.end_node.y),
+            5,
+        )
         font = pygame.font.Font(None, 20)
         text = font.render(str(self.weigth), True, (0, 0, 0))
         x = (self.start_node.x + self.end_node.x) / 2
         y = (self.start_node.y + self.end_node.y) / 2
         screen.blit(text, (x, y))
+
+    # Checks if path includes both end points of comparable path
+    def compare(self, path: Path) -> bool:
+        if (path.start_node == self.start_node and path.end_node == self.end_node) or (
+            path.start_node == self.end_node and path.end_node == self.start_node
+        ):
+            return True
+        return False
+
+    def __repr__(self) -> str:
+        return f"Node {self.start_node.tag} to node {self.end_node.tag}"
