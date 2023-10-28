@@ -14,6 +14,8 @@ class Interface:
 
     path = []
     nodes = []
+    path_nodes = []
+    shortest_path = []
     graph = Graph()
 
     selected_node = None
@@ -83,9 +85,7 @@ class Interface:
                 elif event.key == pygame.K_SPACE:
                     # TODO pass nodes and stuff
                     graph.pass_nodes(nodes)
-                    path = graph.search_path()
-                    for node in path:
-                        print(node)
+                    path_nodes, shortest_path = graph.search_path()
                 else:
                     if selected_node:
                         edge_weight += event.unicode
@@ -98,6 +98,8 @@ class Interface:
         screen.blit(text, (x, y))
         for edge in path:
             edge.draw(screen)
+        for edge in shortest_path:
+            edge.draw(screen, (0, 255, 0), False)
         for node in nodes:
             node.draw(screen)
 

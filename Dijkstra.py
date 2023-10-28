@@ -47,54 +47,15 @@ class Graph:
             node = node.parent
             path.append(node)
 
-        return path
+        path.reverse()
+        shortest = []
+        for i in range(len(path) - 1):
+            node_a = path[i]
+            node_b = path[i + 1]
+            for route in node_a.paths:
+                comparable = Path(0, node_a, node_b)
+                if route.compare(comparable):
+                    shortest.append(comparable)
+                    break
 
-
-# window = Interface()
-
-# path = window.path
-
-# nodes = window.nodes
-# visited = []
-
-# for node in nodes:
-#     if node.distance == 0:
-#         visited.append(node)
-#         node.visited = True
-
-# while True:
-#     for node in visited:
-#         for p in node.paths:
-#             p.check_distance()
-
-#     val = sys.maxsize
-#     flag_node = None
-#     flag_parent = None
-
-#     for node in visited:
-#         for n in node.neighbors:
-#             if n.distance < val and not n.visited:
-#                 val = n.distance
-#                 flag_node = n
-#                 flag_parent = node
-
-#     visited.append(flag_node)
-#     flag_node.visited = True
-#     flag_node.add_parent(flag_parent)
-
-#     if not flag_node.neighbors:
-#         break
-
-# n = visited[-1]
-# path.append(n)
-# while n.parent:
-#     path.append(n.parent)
-#     n = n.parent
-
-# for node in path:
-#     print(node)
-
-# print("--------")
-
-# for node in visited:
-#     print(node)
+        return path, shortest
