@@ -20,6 +20,7 @@ class Graph:
                 self.visited.append(node)
                 node.visited = True
         while True:
+            # update weights
             for node in self.visited:
                 for p in node.paths:
                     p.check_distance()
@@ -27,6 +28,7 @@ class Graph:
             flag_node = None
             flag_parent = None
 
+            # change the node to the neighboring node with least weight
             for node in self.visited:
                 for n in node.neighbors:
                     if n.distance < val and not n.visited:
@@ -34,6 +36,7 @@ class Graph:
                         flag_node = n
                         flag_parent = node
 
+            # change the node to visited and add them to the list
             self.visited.append(flag_node)
             flag_node.visited = True
             flag_node.add_parent(flag_parent)
