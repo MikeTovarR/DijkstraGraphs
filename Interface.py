@@ -17,6 +17,7 @@ class Interface:
 
         path = []
         nodes = []
+        path_nodes = []
         shortest_path = []
         graph = Graph()
 
@@ -25,8 +26,7 @@ class Interface:
         edge_weight = ""
 
         font = pygame.font.Font(None, 36)
-        node_tag = font.render(input_text, True, (0, 0, 0))
-        path_value = font.render(input_text, True, (0, 0, 0))
+        text = font.render(input_text, True, (0, 0, 0))
 
         running = True
         while running:
@@ -94,7 +94,7 @@ class Interface:
                     elif event.key == pygame.K_SPACE:
                         # TODO pass nodes and stuff
                         graph.pass_nodes(nodes)
-                        shortest_path = graph.search_path()
+                        path_nodes, shortest_path = graph.search_path()
                     else:
                         if selected_node:
                             edge_weight += event.unicode
@@ -103,10 +103,8 @@ class Interface:
 
             screen.fill((255, 255, 255))
             # Muestra el texto de entrada
-            node_tag = font.render(input_text, True, (0, 0, 0))
-            path_value = font.render(edge_weight, True, (40, 40, 40))
-            screen.blit(node_tag, (x, y))
-            screen.blit(path_value, (x, y))
+            text = font.render(input_text, True, (0, 0, 0))
+            screen.blit(text, (x, y))
             for edge in path:
                 edge.draw(screen)
             for edge in shortest_path:
