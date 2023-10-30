@@ -26,7 +26,8 @@ class Interface:
         edge_weight = ""
 
         font = pygame.font.Font(None, 36)
-        text = font.render(input_text, True, (0, 0, 0))
+        node_tag = font.render(input_text, True, (0, 0, 0))
+        path_value = font.render(input_text, True, (0, 0, 0))
 
         running = True
         while running:
@@ -103,8 +104,10 @@ class Interface:
 
             screen.fill((255, 255, 255))
             # Muestra el texto de entrada
-            text = font.render(input_text, True, (0, 0, 0))
-            screen.blit(text, (x, y))
+            node_tag = font.render(input_text, True, (0, 0, 0))
+            path_value = font.render(edge_weight, True, (40, 40, 40))
+            screen.blit(node_tag, (x, y))
+            screen.blit(path_value, (x, y))
             for edge in path:
                 edge.draw(screen)
             for edge in shortest_path:
