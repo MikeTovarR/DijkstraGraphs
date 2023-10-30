@@ -11,7 +11,7 @@ class Path:
 
 
 class Node:
-    def __init__(self, tag: str, x, y, distance: int = sys.maxsize) -> None:
+    def __init__(self, tag: str, x, y, distance: int = sys.maxsize) -> Node:
         self.tag = tag
         self.distance = distance
         self.neighbors = []
@@ -34,7 +34,7 @@ class Node:
         self.parent = parent
 
     def __repr__(self) -> str:
-        return f"Node {self.tag}: Distance {self.distance}, Visted {self.visited}"
+        return f"Node {self.tag}: Distance {self.distance}, Visited {self.visited}"
 
     def draw(self, screen):
         if not self.visited:
@@ -53,16 +53,16 @@ class Node:
 
 
 class Path:
-    def __init__(self, weight: int, start_node: Node, end_node: Node) -> None:
-        self.weigth = weight
+    def __init__(self, weight: int, start_node: Node, end_node: Node) -> Path:
+        self.weight = weight
         self.start_node = start_node
         self.end_node = end_node
         self.start_node.add_neighbor(end_node)
         self.start_node.add_path(self)
 
     def check_distance(self) -> None:
-        if self.weigth + self.start_node.distance < self.end_node.distance:
-            self.end_node.distance = self.weigth + self.start_node.distance
+        if self.weight + self.start_node.distance < self.end_node.distance:
+            self.end_node.distance = self.weight + self.start_node.distance
 
     def draw(self, screen, color=(0, 0, 255), show_weight: bool = True):
         pygame.draw.line(
@@ -73,7 +73,7 @@ class Path:
             5,
         )
         font = pygame.font.Font(None, 20)
-        text = font.render(str(self.weigth), True, (0, 0, 0))
+        text = font.render(str(self.weight), True, (0, 0, 0))
         x = (self.start_node.x + self.end_node.x) / 2
         y = (self.start_node.y + self.end_node.y) / 2
         if show_weight:

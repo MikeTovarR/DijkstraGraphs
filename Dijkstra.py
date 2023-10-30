@@ -5,7 +5,11 @@ import sys
 
 
 class Graph:
-    def __init__(self) -> None:
+    pass
+
+
+class Graph:
+    def __init__(self) -> Graph:
         self.nodes = []
         self.visited = []
 
