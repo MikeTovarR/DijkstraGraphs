@@ -98,7 +98,8 @@ class Interface:
                         path_nodes, shortest_path = graph.search_path()
                     else:
                         if selected_node:
-                            edge_weight += event.unicode
+                            if event.unicode.isdigit():
+                                edge_weight += event.unicode
                         else:
                             input_text += event.unicode
 
